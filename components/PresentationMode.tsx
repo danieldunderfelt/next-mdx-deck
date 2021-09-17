@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { MODES } from '../constants/modes'
+import { Modes } from '../constants/modes'
 
 const PresentationFrame = styled.div`
   display: flex;
@@ -19,8 +19,8 @@ const SlideWindow = styled.div`
 
   #slide {
     border: 1px solid #fff;
-    align-items:flex-start;
-    height:auto;
+    align-items: flex-start;
+    height: auto;
   }
 `
 
@@ -45,13 +45,8 @@ const SpeakerNotesWindow = styled.div`
   }
 `
 
-export default function PresentationMode({
-  mode,
-  notes,
-  currentSlide,
-  children,
-}) {
-  if (mode === MODES.SPEAKER) {
+export default function PresentationMode({ mode, notes, currentSlide, children }) {
+  if (mode === Modes.SPEAKER) {
     return (
       <PresentationFrame>
         <SlideWindow>

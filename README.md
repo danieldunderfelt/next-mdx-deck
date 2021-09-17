@@ -66,7 +66,7 @@ Slide pages represent real pages - so `page-2.mdx` == `your-site.com/page-2`. By
 
 Theming is accomplished with **CSS custom properties** and/or **Styled Components**.
 
-Design tokens are stored as CSS custom properties inside the SlidePage layout (`/layouts/SlidePage.jsx`), which are injected into the app using Styled Component's global styling utility. There you can change the color of text, background colors, fonts, etc.
+Design tokens are stored as CSS custom properties inside the SlidePage layout (`/layouts/SlidePage.tsx`), which are injected into the app using Styled Component's global styling utility. There you can change the color of text, background colors, fonts, etc.
 
 The actual CSS styles of the Slideshow are also stored in the SlidePage layout. There you can change the padding of slides, alignment of quotes, etc.
 

@@ -5,10 +5,17 @@ const StyledSlide = styled.div`
   width: 100%;
 `
 
-export default function Slide({ children, id, className }) {
+type PropTypes = {
+  id?: number
+  className?: string
+}
+
+const Slide: React.FC<PropTypes> = ({ children, id, className }) => {
   return (
     <StyledSlide id={id} className={className}>
       {children}
     </StyledSlide>
   )
 }
+
+export default Slide

@@ -8,35 +8,38 @@ const keys = {
 }
 
 export const useStorage = () => {
-  const { currentSlide, setSlide } = useCurrentSlide()
-  const router = useRouter()
-  const currentPage = router.query && 'slide' in router.query && parseInt(router.query.slide, 10)
-  const [focused, setFocused] = useState(false)
+  let { currentSlide, setSlide } = useCurrentSlide()
+  let router = useRouter()
+
+  let currentPage =
+    router.query && 'slide' in router.query && parseInt(router.query.slide as string, 10)
+
+  let [focused, setFocused] = useState(false)
 
   /**
    * Checks when user enters (focus) or
    * leaves (blur) browser window/tab
    */
-  const handleFocus = () => setFocused(true)
-  const handleBlur = () => setFocused(false)
+  let handleFocus = () => setFocused(true)
+  let handleBlur = () => setFocused(false)
 
   /**
    * Updates route or context with local storage data
    * from event listener
    * @param {*} e
    */
-  const handleStorageChange = (e) => {
-    const n = parseInt(e.newValue, 10)
-    const syncedSlide = localStorage.getItem(keys.slide)
+  let handleStorageChange = (e) => {
+    let n = e.newValue
+    let syncedSlide = localStorage.getItem(keys.slide)
+
     // if (focused) return
-    if (Number.isNaN(n)) return
+    if (Number.isNaN(n)) {
+      return
+    }
+
     switch (e.key) {
-      case keys.page:
-        router.push(`/slides/${parseInt(n, 10)}#${syncedSlide}`)
-        break
       case keys.slide:
-        window.location.hash = `#${n}`
-        setSlide(n)
+        setSlide(parseInt(n, 10))
         break
       default:
         break
@@ -49,13 +52,19 @@ export const useStorage = () => {
 
   useEffect(() => {
     if (process.browser) {
-      if (!focused) window.addEventListener('storage', handleStorageChange)
+      if (!focused) {
+        window.addEventListener('storage', handleStorageChange)
+      }
+
       window.addEventListener('focus', handleFocus)
       window.addEventListener('blur', handleBlur)
     }
     return () => {
       if (process.browser) {
-        if (!focused) window.removeEventListener('storage', handleStorageChange)
+        if (!focused) {
+          window.removeEventListener('storage', handleStorageChange)
+        }
+
         window.removeEventListener('focus', handleFocus)
         window.removeEventListener('blur', handleBlur)
       }
@@ -66,15 +75,11 @@ export const useStorage = () => {
    * Sync localstorage with changes to slides or pages
    */
   useEffect(() => {
-    if (!focused) return
-    localStorage.setItem(keys.slide, currentSlide)
-    localStorage.setItem(keys.page, currentPage)
+    if (!focused) {
+      return
+    }
+
+    localStorage.setItem(keys.slide, String(currentSlide))
+    localStorage.setItem(keys.page, String(currentPage))
   }, [focused, currentSlide, currentPage])
 }
-
-export const Storage = () => {
-  useStorage()
-  return <></>
-}
-
-export default useStorage
