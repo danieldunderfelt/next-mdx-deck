@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 
-export default function Header({ name, title, date, url }) {
+function Header({ name, title, date, url }) {
   return (
     <header>
       <div>
@@ -17,3 +17,5 @@ export default function Header({ name, title, date, url }) {
     </header>
   )
 }
+
+export default Header
