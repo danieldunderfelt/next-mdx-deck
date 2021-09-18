@@ -16,6 +16,8 @@ export function useSlideUrl() {
         {
           pathname: router.pathname,
           query: { ...currentQuery, mode },
+          // @ts-ignore
+          hash: currentSlide,
         },
         undefined,
         {
@@ -26,6 +28,7 @@ export function useSlideUrl() {
   }, [mode, router])
 
   useEffect(() => {
+    console.log(currentSlide)
     window.location.hash = `#${currentSlide}`
   }, [currentSlide])
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useCurrentSlide } from '../context/CurrentSlideContext'
 
 const keys = {
@@ -62,10 +62,23 @@ export const useStorage = () => {
    * Sync localstorage with changes to slides or pages
    */
   useEffect(() => {
-    if (!focused) {
+    if (!focused || !currentSlide) {
       return
     }
 
     localStorage.setItem(keys.slide, String(currentSlide))
-  }, [focused, currentSlide])
+  }, [currentSlide, focused])
+
+  let getStoredSlide = useCallback(() => {
+    if (!process.browser) {
+      return undefined
+    }
+
+    let storedSlideIndex = localStorage.getItem(keys.slide)
+    return storedSlideIndex ? parseInt(storedSlideIndex, 10) : undefined
+  }, [])
+
+  return {
+    getStoredSlide,
+  }
 }

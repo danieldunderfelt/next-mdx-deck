@@ -26,28 +26,35 @@ export const CurrentSlideContext = createContext<CurrentSlideContextType>({
 })
 
 export function CurrentSlideProvider({ children }) {
+  let { getStoredSlide } = useStorage()
+
   // Grab initial slide from hash (#) in URL
-  const initialSlide =
-    process.browser && window.location.hash ? parseInt(window.location.hash.replace('#', '')) : 0
+  let initialSlide =
+    process.browser && window.location.hash
+      ? parseInt(window.location.hash.replace('#', ''), 10)
+      : 0
 
-  const [currentSlide, setSlide] = useState<number>(initialSlide)
-  const [currentStep, setCurrentStep] = useState<number>(0)
-  const [steps, setSteps] = useState<number[]>([])
+  // If no url state, check the storage. Default to 0, the first slide.
+  if (!initialSlide) {
+    initialSlide = getStoredSlide() || 0
+  }
 
-  const addStep = (id: number) => {
+  let [currentSlide, setSlide] = useState<number>(initialSlide)
+  let [currentStep, setCurrentStep] = useState<number>(0)
+  let [steps, setSteps] = useState<number[]>([])
+
+  let addStep = (id: number) => {
     setSteps((prevSteps) => [...new Set([...prevSteps, id])])
   }
 
-  const removeStep = (id) => {
+  let removeStep = (id) => {
     setSteps((prevSteps) => [...prevSteps.filter((prevStep) => prevStep !== id)])
   }
 
-  const clearSteps = () => {
+  let clearSteps = () => {
     setSteps([])
     setCurrentStep(0)
   }
-
-  console.log('rendering context', currentStep, steps)
 
   return (
     <CurrentSlideContext.Provider

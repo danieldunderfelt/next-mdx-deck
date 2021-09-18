@@ -129,14 +129,10 @@ const GlobalStyle = createGlobalStyle`
 
   pre {
     font-size: 0.75em !important;
-
     display: inline-block;
     overflow-x: scroll;
-
     margin: 2rem 0;
-
     text-align: left;
-
     color: var(--accent);
   }
 

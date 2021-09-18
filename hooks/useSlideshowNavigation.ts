@@ -8,7 +8,7 @@ const NEXT = [13, 32, 39]
 const PREV = 37
 const PRESENTER = 80
 
-export function useSlideshowNavigation() {
+export function useSlideshowNavigation(slidesCount) {
   const { setSlide, steps, currentStep, setCurrentStep, clearSteps } = useCurrentSlide()
   const { mode, setMode } = useMode()
 
@@ -30,24 +30,24 @@ export function useSlideshowNavigation() {
       if (NEXT.indexOf(keyCode) !== -1) {
         // Do we have Steps inside the slide? Navigate those first
         if (steps.length > 0 && currentStep < steps.length - 1) {
-          return setCurrentStep((prevStep) => prevStep + 1)
+          return setCurrentStep((prevStep) => Math.min(steps.length, prevStep + 1))
         }
 
         // Otherwise go to next slide
-        setSlide((prevState) => prevState + 1)
+        setSlide((prevState) => Math.min(slidesCount, prevState + 1))
         clearSteps()
       } else if (keyCode === PREV) {
         // Do we have Steps inside the slide? Navigate those first
         if (steps.length > 0 && currentStep !== 0) {
-          return setCurrentStep((prevStep) => prevStep - 1)
+          return setCurrentStep((prevStep) => Math.max(0, prevStep - 1))
         }
 
         // Otherwise go to prev slide
-        setSlide((prevState) => prevState - 1)
+        setSlide((prevState) => Math.max(0, prevState - 1))
         clearSteps()
       }
     },
-    [mode]
+    [mode, steps, currentStep, slidesCount]
   )
 
   const swipeLeft = () => {
