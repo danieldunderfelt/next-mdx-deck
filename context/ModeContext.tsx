@@ -13,15 +13,25 @@ export const ModeContext = createContext<ModeContextType>({
 })
 
 export function ModeProvider({ children }) {
-  const [mode, setMode] = useState<Modes>(Modes.SLIDESHOW)
-  const router = useRouter()
-  const newMode = router.query.mode as string
+  let [mode, setMode] = useState<Modes>(Modes.SLIDESHOW)
+  let router = useRouter()
 
+  // Sync URL mode with mode state.
   useEffect(() => {
-    if (newMode && Object.values(Modes).includes(newMode as Modes)) {
-      setMode(newMode as Modes)
+    function handleRouteChange() {
+      const newMode = router.query.mode as string
+
+      if (newMode && !!Modes[newMode] && newMode !== mode) {
+        setMode(Modes[newMode])
+      }
     }
-  }, [newMode])
+
+    router.events.on('routeChangeComplete', handleRouteChange)
+
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange)
+    }
+  }, [])
 
   return <ModeContext.Provider value={{ mode, setMode }}>{children}</ModeContext.Provider>
 }

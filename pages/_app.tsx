@@ -1,5 +1,4 @@
 import { ThemeProvider } from 'styled-components'
-import Head from 'next/head'
 import { siteConfig } from '../site.config.js'
 import Header from '../components/Header'
 import MDXProvider from '../components/MDXProvider'
@@ -8,6 +7,7 @@ import { CurrentSlideProvider } from '../context/CurrentSlideContext'
 import { ModeProvider } from '../context/ModeContext'
 import TransitionPage from '../layouts/TransitionPage'
 import GlobalStyle from '../components/GlobalStyle'
+import Head from 'next/head'
 
 const theme = {
   colors: {
@@ -17,13 +17,17 @@ const theme = {
 
 function App({ Component, pageProps }) {
   return (
-    <MDXProvider>
-      <ThemeProvider theme={theme}>
-        <CurrentSlideProvider>
-          <ModeProvider>
+    <ThemeProvider theme={theme}>
+      <CurrentSlideProvider>
+        <ModeProvider>
+          <MDXProvider>
             <AnimatePresence exitBeforeEnter>
               <TransitionPage>
                 <Head>
+                  <meta
+                    name="viewport"
+                    content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"
+                  />
                   <title>
                     {siteConfig.name} - {siteConfig.title}
                   </title>
@@ -43,10 +47,10 @@ function App({ Component, pageProps }) {
                 <Component {...pageProps} />
               </TransitionPage>
             </AnimatePresence>
-          </ModeProvider>
-        </CurrentSlideProvider>
-      </ThemeProvider>
-    </MDXProvider>
+          </MDXProvider>
+        </ModeProvider>
+      </CurrentSlideProvider>
+    </ThemeProvider>
   )
 }
 

@@ -26,8 +26,6 @@ export const CurrentSlideContext = createContext<CurrentSlideContextType>({
 })
 
 export function CurrentSlideProvider({ children }) {
-  useStorage()
-
   // Grab initial slide from hash (#) in URL
   const initialSlide =
     process.browser && window.location.hash ? parseInt(window.location.hash.replace('#', '')) : 0

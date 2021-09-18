@@ -1,8 +1,7 @@
 import { useRouter } from 'next/router'
 import { useCurrentSlide } from '../context/CurrentSlideContext'
-import { useCallback, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useMode } from '../context/ModeContext'
-import { Modes } from '../constants/modes'
 
 export function useSlideUrl() {
   let router = useRouter()
@@ -10,8 +9,23 @@ export function useSlideUrl() {
   let { currentSlide } = useCurrentSlide()
 
   useEffect(() => {
-    router.push(router.pathname, `${router.pathname}?mode=${Modes.SLIDESHOW}#${currentSlide}`, {
-      shallow: true,
-    })
-  }, [mode, router, currentSlide])
+    let currentQuery = router.query || {}
+
+    if (!currentQuery.mode || currentQuery.mode !== mode) {
+      router.push(
+        {
+          pathname: router.pathname,
+          query: { ...currentQuery, mode },
+        },
+        undefined,
+        {
+          shallow: true,
+        }
+      )
+    }
+  }, [mode, router])
+
+  useEffect(() => {
+    window.location.hash = `#${currentSlide}`
+  }, [currentSlide])
 }

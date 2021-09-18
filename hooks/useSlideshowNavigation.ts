@@ -9,9 +9,7 @@ const PREV = 37
 const PRESENTER = 80
 
 export function useSlideshowNavigation() {
-  const { currentSlide, setSlide, steps, currentStep, setCurrentStep, clearSteps } =
-    useCurrentSlide()
-
+  const { setSlide, steps, currentStep, setCurrentStep, clearSteps } = useCurrentSlide()
   const { mode, setMode } = useMode()
 
   let navigate = useCallback(

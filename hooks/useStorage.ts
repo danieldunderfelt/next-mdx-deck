@@ -1,19 +1,12 @@
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 import { useCurrentSlide } from '../context/CurrentSlideContext'
 
 const keys = {
   slide: 'next-mdx-deck-slide',
-  page: 'next-mdx-deck-page',
 }
 
 export const useStorage = () => {
   let { currentSlide, setSlide } = useCurrentSlide()
-  let router = useRouter()
-
-  let currentPage =
-    router.query && 'slide' in router.query && parseInt(router.query.slide as string, 10)
-
   let [focused, setFocused] = useState(false)
 
   /**
@@ -29,20 +22,14 @@ export const useStorage = () => {
    * @param {*} e
    */
   let handleStorageChange = (e) => {
-    let n = e.newValue
-    let syncedSlide = localStorage.getItem(keys.slide)
+    let newValue = parseInt(e.newValue, 10)
 
-    // if (focused) return
-    if (Number.isNaN(n)) {
+    if (isNaN(newValue)) {
       return
     }
 
-    switch (e.key) {
-      case keys.slide:
-        setSlide(parseInt(n, 10))
-        break
-      default:
-        break
+    if (e.key === keys.slide) {
+      setSlide(newValue)
     }
   }
 
@@ -80,6 +67,5 @@ export const useStorage = () => {
     }
 
     localStorage.setItem(keys.slide, String(currentSlide))
-    localStorage.setItem(keys.page, String(currentPage))
-  }, [focused, currentSlide, currentPage])
+  }, [focused, currentSlide])
 }

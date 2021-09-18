@@ -7,11 +7,15 @@ import { useCurrentSlide } from '../context/CurrentSlideContext'
 import { useMdxSlides } from '../hooks/useMdxSlides'
 import { useSpeakerNotes } from '../hooks/useSpeakerNotes'
 import { useSlideshowNavigation } from '../hooks/useSlideshowNavigation'
+import { useStorage } from '../hooks/useStorage'
+import { useSlideUrl } from '../hooks/useSlideUrl'
 
 const SlidePage: React.FC = ({ children }) => {
-  const { currentSlide } = useCurrentSlide()
+  useStorage()
+  useSlideUrl()
 
-  const { mode } = useMode()
+  let { currentSlide } = useCurrentSlide()
+  let { mode } = useMode()
   let { swipeRight, swipeLeft } = useSlideshowNavigation()
 
   let slides = useMdxSlides(children as ReactElement[])

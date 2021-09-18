@@ -27,4 +27,8 @@ const mdComponents = {
   motion,
 }
 
-export default ({ children }) => <MDXProvider components={mdComponents}>{children}</MDXProvider>
+const MdxProvider: React.FC = ({ children }) => (
+  <MDXProvider components={mdComponents}>{children}</MDXProvider>
+)
+
+export default MdxProvider
