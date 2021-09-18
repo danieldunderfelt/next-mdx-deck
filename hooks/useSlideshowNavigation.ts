@@ -34,7 +34,7 @@ export function useSlideshowNavigation(slidesCount) {
         }
 
         // Otherwise go to next slide
-        setSlide((prevState) => Math.min(slidesCount, prevState + 1))
+        setSlide((prevState) => Math.min(slidesCount - 1, prevState + 1))
         clearSteps()
       } else if (keyCode === PREV) {
         // Do we have Steps inside the slide? Navigate those first
