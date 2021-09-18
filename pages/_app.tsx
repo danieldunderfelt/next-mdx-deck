@@ -1,7 +1,7 @@
 import { ThemeProvider } from 'styled-components'
 import { siteConfig } from '../site.config.js'
 import Header from '../components/Header'
-import MDXProvider from '../components/MDXProvider'
+import MDXProvider from '../components/MdxProvider'
 import { AnimatePresence } from 'framer-motion'
 import { CurrentSlideProvider } from '../context/CurrentSlideContext'
 import { ModeProvider } from '../context/ModeContext'
