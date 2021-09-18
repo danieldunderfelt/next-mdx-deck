@@ -28,7 +28,6 @@ export function useSlideUrl() {
   }, [mode, router])
 
   useEffect(() => {
-    console.log(currentSlide)
     window.location.hash = `#${currentSlide}`
   }, [currentSlide])
 }

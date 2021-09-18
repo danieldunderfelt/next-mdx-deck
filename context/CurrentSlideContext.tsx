@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react'
-import { useStorage } from '../hooks/useStorage'
+import { useStoredSlide } from '../hooks/useStorage'
 
 type CurrentSlideContextType = {
   currentSlide: number
@@ -26,7 +26,7 @@ export const CurrentSlideContext = createContext<CurrentSlideContextType>({
 })
 
 export function CurrentSlideProvider({ children }) {
-  let { getStoredSlide } = useStorage()
+  let getStoredSlide = useStoredSlide()
 
   // Grab initial slide from hash (#) in URL
   let initialSlide =

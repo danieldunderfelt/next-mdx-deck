@@ -8,9 +8,11 @@ import { useMdxSlides } from '../hooks/useMdxSlides'
 import { useSpeakerNotes } from '../hooks/useSpeakerNotes'
 import { useSlideshowNavigation } from '../hooks/useSlideshowNavigation'
 import { useSlideUrl } from '../hooks/useSlideUrl'
+import { useStorage } from '../hooks/useStorage'
 
 const SlidePage: React.FC = ({ children }) => {
   useSlideUrl()
+  useStorage()
 
   let { currentSlide } = useCurrentSlide()
   let { mode } = useMode()
